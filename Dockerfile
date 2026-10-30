@@ -1,12 +1,15 @@
-# Multi-stage Dockerfile for Medicare-AI
-FROM python:3.11-slim as backend
+FROM python:3.11-slim
 
 WORKDIR /app
-COPY backend/requirements.txt .
+
+COPY backend/requirements.txt ./requirements.txt
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/app ./app
-COPY backend/uploads ./uploads
+
+RUN mkdir -p ./uploads
 
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
