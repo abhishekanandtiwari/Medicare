@@ -22,7 +22,32 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Handle normal email/password login
+  // Redirect users according to their role.
+  const redirectByRole = (loggedInUser) => {
+    const role = String(loggedInUser?.role || '').toLowerCase();
+
+    switch (role) {
+      case 'patient':
+        navigate('/dashboard');
+        break;
+
+      case 'doctor':
+        navigate('/doctor-dashboard');
+        break;
+
+      case 'admin':
+        navigate('/admin-dashboard');
+        break;
+
+      default:
+        setError(
+          `Login succeeded, but the user role "${role || 'unknown'}" is not recognized.`
+        );
+        break;
+    }
+  };
+
+  // Handle email and password login.
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,8 +57,8 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(email.trim(), password);
-      navigate('/dashboard');
+      const loggedInUser = await login(email.trim(), password);
+      redirectByRole(loggedInUser);
     } catch (err) {
       setError(
         err?.message || 'Login failed. Please verify your credentials.'
@@ -43,7 +68,7 @@ export default function LoginPage() {
     }
   };
 
-  // Handle demo account login
+  // Handle demo account login.
   const handleDemo = async (role) => {
     if (loading) return;
 
@@ -51,10 +76,12 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await demoLogin(role);
-      navigate('/dashboard');
+      const loggedInUser = await demoLogin(role);
+      redirectByRole(loggedInUser);
     } catch (err) {
-      setError(err?.message || 'Demo login failed. Please try again.');
+      setError(
+        err?.message || 'Demo login failed. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
@@ -228,4 +255,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
