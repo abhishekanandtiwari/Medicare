@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import {
   HeartPulse,
@@ -25,7 +26,8 @@ import MedicalDisclaimer from '../components/MedicalDisclaimer';
 import QuickLogVitalsModal from '../components/QuickLogVitalsModal';
 import QRCodeModal from '../components/QRCodeModal';
 
-export default function PatientDashboard({ onNavigate }) {
+export default function PatientDashboard() 
+  const navigate = useNavigate();{
   const { elderlyMode, t } = useAuth();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
