@@ -5,6 +5,8 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PatientDashboard from "./pages/PatientDashboard";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import AIAssistantPage from "./pages/AIAssistantPage";
 import SymptomAnalyzerPage from "./pages/SymptomAnalyzerPage";
 import MedicalReportAIPage from "./pages/MedicalReportAIPage";
@@ -27,7 +29,10 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
 
           {/* Patient Pages */}
+         
           <Route path="/dashboard" element={<PatientDashboard />} />
+          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/ai-assistant" element={<AIAssistantPage />} />
           <Route path="/symptom-analyzer" element={<SymptomAnalyzerPage />} />
           <Route path="/medical-reports" element={<MedicalReportAIPage />} />
